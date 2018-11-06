@@ -1,0 +1,23 @@
+{
+  "name": "rideshare-eth-front",
+  "version": "1.0.0",
+  "description": "Frontend system of ride-share system with Ethereum",
+  "main": "index.js",
+  "dependencies": {
+    "material-design-lite": "^1.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mecaota/rideshare-eth-front.git"
+  },
+  "author": "Tetsuro Higuchi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mecaota/rideshare-eth-front/issues"
+  },
+  "homepage": "https://github.com/mecaota/rideshare-eth-front#readme"
+}
