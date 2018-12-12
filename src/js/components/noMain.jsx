@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Main = () => {
     return (
@@ -7,7 +7,7 @@ const Main = () => {
                 <p>Hello world!</p>
             </div>
         </section>
-  )
-}
+    )
+  }
 
 export default Main
