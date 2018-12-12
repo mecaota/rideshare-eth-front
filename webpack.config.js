@@ -1,4 +1,5 @@
 module.exports = {
+  mode: "production",
   entry: {
     main: './src/js/index.jsx'
   },
@@ -7,29 +8,33 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.css$/,
-        loaders:['style-loader', 'css-loader']
+        use:['style-loader', 'css-loader']
       },
       {
         test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.sass$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.js?$/,
         exclude: /(node_modules)/,
-        loader: 'babel-loader'
+        use: 'babel-loader'
       },
       {
         test: /\.jsx$/,
         exclude: /(node_modules)/,
-        loader: 'babel-loader'
+        use: 'babel-loader'
       }
     ]
+  },
+  devServer: {
+    contentBase: __dirname + '/public',
+    publicPath: '/'
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import Header from './components/Header.jsx'
-import Main from './main.jsx'
+//import Main from './components/main.jsx'
 import Footer from './components/Footer.jsx'
 import '../css/style.scss';
 
@@ -11,8 +11,6 @@ class Index extends React.Component {
       <div className="">
         <Header />
         <main className="container">
-          <Main />
-          <p>Hello {this.props.name}!</p>
         </main>
         <Footer />
       </div>
@@ -20,4 +18,4 @@ class Index extends React.Component {
   }
 }
 
-render(<Index name="810"/>, document.getElementById('app'));
+render(<Index />, document.getElementById('app'));
