@@ -4,7 +4,7 @@ module.exports = {
     main: './src/js/index.jsx'
   },
   output: {
-    path: __dirname + '/public/',
+    path: __dirname + '/docs/',
     filename: 'bundle.js'
   },
   module: {
@@ -34,7 +34,7 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: __dirname + '/public',
+    contentBase: __dirname + '/docs',
     publicPath: '/'
   }
 }
