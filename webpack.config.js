@@ -1,5 +1,16 @@
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 module.exports = {
   mode: "production",
+  plugins: [
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    })
+  ],
   entry: {
     main: './src/js/index.jsx'
   },
@@ -11,7 +22,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use:['style-loader', 'css-loader']
+        use:['style-loader', 'css-loader', MiniCssExtractPlugin.loader]
       },
       {
         test: /\.scss$/,
@@ -31,6 +42,19 @@ module.exports = {
         exclude: /(node_modules)/,
         use: 'babel-loader'
       }
+    ]
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    },
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true // set to true if you want JS source maps
+      }),
+      new OptimizeCSSAssetsPlugin({})
     ]
   },
   devServer: {
