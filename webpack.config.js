@@ -11,9 +11,9 @@ module.exports = {
       chunkFilename: "[id].css"
     })
   ],
-  entry: {
-    main: './src/js/index.jsx'
-  },
+  entry: [
+    '@babel/polyfill', './src/js/index.jsx'
+  ],
   output: {
     path: __dirname + '/docs/',
     filename: 'bundle.js'
