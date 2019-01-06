@@ -1,13 +1,15 @@
 import React from 'react';
-import { eth, getMethods, getSelectedAddress } from '../infra/web3connect'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { eth, getMethods, getSelectedAddress } from '../infra/web3connect';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+var moment = require('moment');
 
 export default class InputDemand extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             FormEnable: false,
-            est_date: new Date(),
+            est_date: moment().valueOf(),
             token_id: 0,
             price:0,
             passengers: '',
@@ -58,7 +60,11 @@ export default class InputDemand extends React.Component{
         console.log(this.state.arrv_name);
     }
     handleChange (event) {
-        this.setState({[event.target.name]: event.target.value});
+        if(event.target.name == "est_date"){
+            this.setState({[event.target.name]: moment(event.target.value).valueOf()});
+        }else{
+            this.setState({[event.target.name]: event.target.value});
+        }
     }
     render(){
         return(
@@ -71,23 +77,23 @@ export default class InputDemand extends React.Component{
                 <form action="javascript:void(0)" onSubmit={this.handleSubmit} accept-charset="UTF-8">
                     {/* token id */}
                     <label htmlFor="token_id">デマンドID
-                        <input type="number" name="token_id" value={this.state.est_date.toLocaleString()} onChange={this.handleChange} readOnly/>
+                        <input type="number" name="token_id" value={this.state.token_id} onChange={this.handleChange} readOnly/>
                     </label>
                     <br />
                     {/* estimated date */}
                     <label htmlFor="est_date">デマンド登録日時
-                        <input type="text" name="est_date" value={this.state.est_date.toLocaleString()} onChange={this.handleChange} readOnly/>
+                        <input type="datetime-local" name="est_date" min={moment().format("YYYY-MM-DDTHH:mm")} value={moment(this.state.est_date).format("YYYY-MM-DDTHH:mm")} onChange={this.handleChange}/>
                     </label>
                     <br />
                     <hr />
                     {/* price */}
                     <label htmlFor="price">設定価格
-                        <input type="number" name="price" value={this.state.price} onChange={this.handleChange} readOnly/>
+                        <input type="number" name="price" value={this.state.price} onChange={this.handleChange}/>
                     </label>
                     <br />
                     {/* passengers */}
                     <label htmlFor="passengers">募集人数
-                        <input type="number" min='1' max='256' name="passengers" required value={this.state.passengers} onChange={this.handleChange} />
+                        <input type="number" name="passengers" required min='1' max='256' value={this.state.passengers} onChange={this.handleChange} />
                     </label>
                     <br />
                     <hr />
