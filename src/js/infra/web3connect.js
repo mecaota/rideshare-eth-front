@@ -20,7 +20,17 @@ export function getSelectedAddress(){
 
 export function getDemandList(){
   const methods = getMethods();
-
+  var result = [];
+  methods.getAllDemandTokens().call()
+  .then(demands => {
+    return Promise.all(demands.map(demand => {
+      return methods.getDemandInfo(demand).call()
+      .then(info => {
+        result.push(info);
+      });
+    }));
+  });
+  return result;
 }
 
 export function getMethods(){
@@ -29,20 +39,21 @@ export function getMethods(){
 
 export function getInstanceInfo(){
   const contract = getInstance();
+  const methods = contract.methods;
   console.log("Web3 provider accounts:");
   console.log(contract);
   console.log(contract.givenProvider);
   console.log("networkVersion:");
   console.log(contract.givenProvider.networkVersion);
   console.log("contract methodsだす");
-  console.log(contract.methods);
+  console.log(methods);
   console.log("contract ownerOf");
-  console.log(contract.methods.ownerOf(getSelectedAddress()));
+  console.log(methods.ownerOf(getSelectedAddress()));
   console.log("contract getAlDemandokens");
-  console.log(contract.methods.getAllDemandTokens().call().value);
+  console.log(getDemandList());
 }
 
-export function getInstance(){
+function getInstance(){
   const web3js = new Web3(window.web3.currentProvider);
   const contract = new web3js.eth.Contract(contractABI, contractAddress);
   return contract;
