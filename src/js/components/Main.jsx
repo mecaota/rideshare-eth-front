@@ -1,6 +1,7 @@
 import React from 'react';
-import { eth, getInstance, isEnabledWeb3 } from '../infra/web3connect'
-import Input from './Input.jsx'
+import { eth, isEnabledWeb3 } from '../infra/web3connect';
+import InputDemand from './InputDemand.jsx';
+import ShowDemand from './ShowDemand.jsx';
 
   export default class Main extends React.Component{
     constructor(props){
@@ -12,11 +13,9 @@ import Input from './Input.jsx'
     }
 
     showInstance(){
+        console.log("Web3 is enabled:");
         console.log(this.state.isWeb3);
         if(isEnabledWeb3()){
-            var contract = getInstance();
-            console.log("Instance object");
-            console.log(contract.methods.getAllDemandTokens().call());
             return (
                 <div className="notification is-primary">
                     <p>Web3 is connected. Watch your console</p>
@@ -41,7 +40,8 @@ import Input from './Input.jsx'
                         </div>
                     </div>
                 </div>
-                <Input />
+                <ShowDemand />
+                <InputDemand />
             </section>
         )
     }

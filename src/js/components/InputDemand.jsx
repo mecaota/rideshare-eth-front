@@ -1,8 +1,8 @@
 import React from 'react';
-import { eth, getInstance, isEnabledWeb3, getSelectedAddress } from '../infra/web3connect'
+import { eth, getMethods, getSelectedAddress } from '../infra/web3connect'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default class Input extends React.Component{
+export default class InputDemand extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -17,16 +17,13 @@ export default class Input extends React.Component{
             arrv_name: '',
             arrv_latitude: '',
             arrv_longitude: '',
-            methods: getInstance().methods
+            methods: getMethods()
         };
-        console.log("contract objectだす");
-        console.log(this.state.methods);
-        console.log(this.state.methods.ownerOf(getSelectedAddress()));
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleSubmit() {
-        var methods = getInstance().methods;
+        var methods = getMethods();
         console.log(methods);
         console.log("mint_demand run");
         console.log(

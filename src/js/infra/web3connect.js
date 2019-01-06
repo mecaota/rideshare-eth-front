@@ -18,13 +18,32 @@ export function getSelectedAddress(){
   return getInstance().givenProvider.selectedAddress;
 }
 
-export function getInstance(){
-  const web3js = new Web3(window.web3.currentProvider);
-  const contract = new web3js.eth.Contract(contractABI, contractAddress);
+export function getDemandList(){
+  const methods = getMethods();
+
+}
+
+export function getMethods(){
+  return getInstance().methods;
+}
+
+export function getInstanceInfo(){
+  const contract = getInstance();
   console.log("Web3 provider accounts:");
   console.log(contract);
   console.log(contract.givenProvider);
   console.log("networkVersion:");
   console.log(contract.givenProvider.networkVersion);
+  console.log("contract methodsだす");
+  console.log(contract.methods);
+  console.log("contract ownerOf");
+  console.log(contract.methods.ownerOf(getSelectedAddress()));
+  console.log("contract getAlDemandokens");
+  console.log(contract.methods.getAllDemandTokens().call().value);
+}
+
+export function getInstance(){
+  const web3js = new Web3(window.web3.currentProvider);
+  const contract = new web3js.eth.Contract(contractABI, contractAddress);
   return contract;
 }
