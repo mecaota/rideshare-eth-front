@@ -1,7 +1,6 @@
 import React from 'react';
 import { eth, getMethods, getSelectedAddress } from '../infra/web3connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 var moment = require('moment');
 
 export default class InputDemand extends React.Component{
@@ -9,7 +8,7 @@ export default class InputDemand extends React.Component{
         super(props);
         this.state = {
             FormEnable: false,
-            est_date: moment().valueOf(),
+            est_date: moment().unix(),
             token_id: 0,
             price:0,
             passengers: '',
@@ -61,7 +60,8 @@ export default class InputDemand extends React.Component{
     }
     handleChange (event) {
         if(event.target.name == "est_date"){
-            this.setState({[event.target.name]: moment(event.target.value).valueOf()});
+            console.log("unix time:");
+            this.setState({[event.target.name]: moment(event.target.value).unix()});
         }else{
             this.setState({[event.target.name]: event.target.value});
         }
@@ -82,7 +82,7 @@ export default class InputDemand extends React.Component{
                     <br />
                     {/* estimated date */}
                     <label htmlFor="est_date">デマンド登録日時
-                        <input type="datetime-local" name="est_date" min={moment().format("YYYY-MM-DDTHH:mm")} value={moment(this.state.est_date).format("YYYY-MM-DDTHH:mm")} onChange={this.handleChange}/>
+                        <input type="datetime-local" name="est_date" min={moment().format("YYYY-MM-DDTHH:mm")} value={moment.unix(this.state.est_date).format("YYYY-MM-DDTHH:mm")} onChange={this.handleChange}/>
                     </label>
                     <br />
                     <hr />

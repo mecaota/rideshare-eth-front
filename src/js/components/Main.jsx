@@ -3,7 +3,7 @@ import { eth, isEnabledWeb3 } from '../infra/web3connect';
 import InputDemand from './InputDemand.jsx';
 import ShowDemand from './ShowDemand.jsx';
 
-  export default class Main extends React.Component{
+export default class Main extends React.Component{
     constructor(props){
         super(props);
         this.state = {

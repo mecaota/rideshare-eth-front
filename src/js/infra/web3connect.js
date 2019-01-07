@@ -18,7 +18,7 @@ export function getSelectedAddress(){
   return getInstance().givenProvider.selectedAddress;
 }
 
-export function getDemandList(){
+export function getDemandListOld(){
   const methods = getMethods();
   var result = [];
   methods.getAllDemandTokens().call()
@@ -30,6 +30,25 @@ export function getDemandList(){
       });
     }));
   });
+  return result;
+}
+
+export async function getDemandList(){
+  const methods = getMethods();
+  var result = [];
+  await methods.getAllDemandTokens().call().then(
+    demands => {
+      return Promise.all(demands.map(
+        demand => {
+          return methods.getDemandInfo(demand).call().then(
+            info => {
+              result.push(info);
+            }
+          );
+        }
+      ));
+    }
+  );
   return result;
 }
 
@@ -49,8 +68,8 @@ export function getInstanceInfo(){
   console.log(methods);
   console.log("contract ownerOf");
   console.log(methods.ownerOf(getSelectedAddress()));
-  console.log("contract getAlDemandokens");
-  console.log(getDemandList());
+  //console.log("contract getAlDemandokens");
+  //console.log(getDemandList());
 }
 
 function getInstance(){
