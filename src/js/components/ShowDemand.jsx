@@ -29,18 +29,15 @@ class DemandInfo extends React.Component{
                     </header>
                     <div className="card-content">
                         <div className="content">
-                            <div className="columns is-gapless is-mobile">
-                                <div className="column is-two-fifths">
-                                    <h1>出発地</h1>
+                            <div className="columns is-mobile is-multiline is-centered">
+                                <div className="column is-full">
+                                    <h1><FontAwesomeIcon icon={['fas', 'plane-departure']} pull="left" />出発地</h1>
                                     <h3>{this.props.demand[6]}</h3>
                                     <h5>緯度:{this.props.demand[7]}</h5>
                                     <h5>軽度:{this.props.demand[8]}</h5>
                                 </div>
-                                <div className="column">
-                                    <FontAwesomeIcon icon={['fas', 'arrow-right']} size="3x"/>
-                                </div>
-                                <div className="column is-two-fifths">
-                                    <h1>到着地</h1>
+                                <div className="column is-full">
+                                    <h1><FontAwesomeIcon icon={['fas', 'plane-arrival']} pull="left" />到着地</h1>
                                     <h3>{this.props.demand[9]}</h3>
                                     <h5>緯度:{this.props.demand[10]}</h5>
                                     <h5>軽度:{this.props.demand[11]}</h5>
@@ -50,12 +47,14 @@ class DemandInfo extends React.Component{
                     </div>
                     <footer className="card-footer">
                         <div className="card-footer-item">
-                            発車日時: {moment.unix(this.props.demand[4]).format('YYYY年MM月DD日(ddd) LT')}
+                            発車日時<br/>
+                            {moment.unix(this.props.demand[4]).format('YYYY年MM月DD日(ddd)')}<br/>
+                            {moment.unix(this.props.demand[4]).format('LT')}
                         </div>
                         <a className="card-footer-item" onClick={this.handleClick}>
                             <div className="columns is-vcentered is-mobile">
                                 <div className="column is-1">
-                                    <FontAwesomeIcon icon={['fas', 'car-side']} size="1x"/>
+                                    <FontAwesomeIcon icon={['fas', 'car-side']} size="1x" pull="left" />
                                 </div>
                                 <div className="column">
                                     乗車する
