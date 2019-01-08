@@ -7,6 +7,16 @@ class DemandInfo extends React.Component{
     constructor(props){
         super(props);
         this.state = {};
+        this.handleClick = this.handleClick.bind(this);
+    }
+    handleClick() {
+        this.props.methods.buyTicket(this.props.demand[0]).send(
+            {from: getSelectedAddress()}
+        ).then(
+            receipt =>{
+                console.log(receipt);
+            }
+        );
     }
     render(){
         return(
@@ -18,7 +28,7 @@ class DemandInfo extends React.Component{
                     </header>
                     <div className="card-content">
                         <div className="content">
-                            <div className="columns is-gapless is-mobile is-vcentered">
+                            <div className="columns is-gapless is-mobile">
                                 <div className="column is-two-fifths">
                                     <h1>出発地</h1>
                                     <h3>{this.props.demand[6]}</h3>
@@ -39,7 +49,7 @@ class DemandInfo extends React.Component{
                     </div>
                     <footer className="card-footer">
                         <div className="card-footer-item">発車日時: {moment.unix(this.props.demand[4]).format('YYYY年MM月DD日(ddd) LT')}</div>
-                        <a href="#" className="card-footer-item"><FontAwesomeIcon icon={['fas', 'car-side']} size="1x"/>乗車する</a>
+                        <a className="card-footer-item" onClick={this.handleClick}><FontAwesomeIcon icon={['fas', 'car-side']} size="1x"/>乗車する</a>
                     </footer>
                 </div>
             </div>
@@ -65,7 +75,7 @@ export default class ShowDemand extends React.Component{
         const demandlist = [];
         this.state.demands.forEach(
             demand => {
-                demandlist.push(<DemandInfo demand={demand} />);
+                demandlist.push(<DemandInfo demand={demand} methods={this.state.methods} />);
             }
         );
         return(
