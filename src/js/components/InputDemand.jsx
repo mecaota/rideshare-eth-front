@@ -29,7 +29,7 @@ export default class InputDemand extends React.Component{
         console.log("mint_demand run");
         console.log(
             this.state.price,
-            Date.parse(this.state.est_date),
+            this.state.est_date,
             this.state.passengers,
             this.state.dept_name,
             this.state.dept_latitude,
@@ -41,7 +41,7 @@ export default class InputDemand extends React.Component{
         console.log(
             methods.mint_demand(
                 this.state.price,
-                Date.parse(this.state.est_date),
+                this.state.est_date,
                 this.state.passengers,
                 this.state.dept_name,
                 this.state.dept_latitude,
