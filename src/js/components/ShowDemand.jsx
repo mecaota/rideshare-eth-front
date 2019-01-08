@@ -10,6 +10,7 @@ class DemandInfo extends React.Component{
         this.handleClick = this.handleClick.bind(this);
     }
     handleClick() {
+        console.log(this.props.demand);
         this.props.methods.buyTicket(this.props.demand[0]).send(
             {from: getSelectedAddress()}
         ).then(
@@ -48,8 +49,21 @@ class DemandInfo extends React.Component{
                         </div>
                     </div>
                     <footer className="card-footer">
-                        <div className="card-footer-item">発車日時: {moment.unix(this.props.demand[4]).format('YYYY年MM月DD日(ddd) LT')}</div>
-                        <a className="card-footer-item" onClick={this.handleClick}><FontAwesomeIcon icon={['fas', 'car-side']} size="1x"/>乗車する</a>
+                        <div className="card-footer-item">
+                            発車日時: {moment.unix(this.props.demand[4]).format('YYYY年MM月DD日(ddd) LT')}
+                        </div>
+                        <a className="card-footer-item" onClick={this.handleClick}>
+                            <div className="columns is-vcentered is-mobile">
+                                <div className="column is-1">
+                                    <FontAwesomeIcon icon={['fas', 'car-side']} size="1x"/>
+                                </div>
+                                <div className="column">
+                                    乗車する
+                                    <br/>
+                                    (残り席数{this.props.demand[5]})
+                                </div>
+                            </div>
+                        </a>
                     </footer>
                 </div>
             </div>
@@ -75,12 +89,14 @@ export default class ShowDemand extends React.Component{
         const demandlist = [];
         this.state.demands.forEach(
             demand => {
-                demandlist.push(<DemandInfo demand={demand} methods={this.state.methods} />);
+                if(demand[5] > 0){
+                    demandlist.push(<DemandInfo demand={demand} methods={this.state.methods} />);
+                }
             }
         );
         return(
             <section className="section">
-                <div className="columns is-centered is-multiline">
+                <div className="columns is-centered is-multiline is-gapless">
                     <div className="column is-four-fifths">
                         <button onClick={this.handleClick} className="button is-rounded is-large is-outlined is-primary">
                             PUSH
