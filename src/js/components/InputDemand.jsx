@@ -24,10 +24,8 @@ export default class InputDemand extends React.Component{
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleSubmit() {
-        var methods = getMethods();
-        console.log(methods);
-        console.log("mint_demand run");
-        console.log(
+        var methods = this.state.methods;
+        methods.mint_demand(
             this.state.price,
             this.state.est_date,
             this.state.passengers,
@@ -37,26 +35,10 @@ export default class InputDemand extends React.Component{
             this.state.arrv_name,
             this.state.arrv_latitude,
             this.state.arrv_longitude
-        );
-        console.log(
-            methods.mint_demand(
-                this.state.price,
-                this.state.est_date,
-                this.state.passengers,
-                this.state.dept_name,
-                this.state.dept_latitude,
-                this.state.dept_longitude,
-                this.state.arrv_name,
-                this.state.arrv_latitude,
-                this.state.arrv_longitude
-            ).send({from: getSelectedAddress()})
-        );
-        console.log("Passengers");
-        console.log(this.state.passengers);
-        console.log("Price");
-        console.log(this.state.price);
-        console.log("arrival Spot");
-        console.log(this.state.arrv_name);
+        ).send({from: getSelectedAddress()}).then(
+            receipt =>{
+                console.log(receipt);
+        });
     }
     handleChange (event) {
         if(event.target.name == "est_date"){
