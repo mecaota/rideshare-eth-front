@@ -18,21 +18,6 @@ export function getSelectedAddress(){
   return getInstance().givenProvider.selectedAddress;
 }
 
-export function getDemandListOld(){
-  const methods = getMethods();
-  var result = [];
-  methods.getAllDemandTokens().call()
-  .then(demands => {
-    return Promise.all(demands.map(demand => {
-      return methods.getDemandInfo(demand).call()
-      .then(info => {
-        result.push(info);
-      });
-    }));
-  });
-  return result;
-}
-
 export async function getDemandList(){
   const methods = getMethods();
   var result = [];
