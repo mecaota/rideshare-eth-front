@@ -18,12 +18,15 @@ export default class InputDemand extends React.Component{
             arrv_name: '',
             arrv_latitude: '',
             arrv_longitude: '',
-            methods: getMethods()
+            methods: getMethods(),
+            isLoading: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.toggleButton = this.toggleButton.bind(this);
     }
     handleSubmit() {
+        this.setState({isLoading: true});
         var methods = this.state.methods;
         methods.mint_demand(
             this.state.price,
@@ -37,6 +40,7 @@ export default class InputDemand extends React.Component{
             this.state.arrv_longitude
         ).send({from: getSelectedAddress()}).then(
             receipt =>{
+                this.setState({isLoading: false});
                 console.log(receipt);
         });
     }
@@ -47,6 +51,12 @@ export default class InputDemand extends React.Component{
         }else{
             this.setState({[event.target.name]: event.target.value});
         }
+    }
+    toggleButton(classes){
+        if(this.state.isDemandLoading){
+            classes += " is-loading";
+        }
+        return classes;
     }
     render(){
         return(
@@ -112,7 +122,7 @@ export default class InputDemand extends React.Component{
                     <br />
                     <hr />
                     {/* submit button */}
-                    <button type="submit">送信</button>
+                    <button type="submit" className={this.toggleButton("button is-large is-primary is-fullwidth")}>送信</button>
                     <br />
                 </form>
             </div>

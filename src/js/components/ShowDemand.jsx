@@ -1,5 +1,5 @@
 import React from 'react';
-import { eth, getMethods, getInstanceInfo, getDemandList, getSelectedAddress } from '../infra/web3connect';
+import { getWeb3Event, getMethods, getInstanceInfo, getDemandList, getSelectedAddress } from '../infra/web3connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 var moment = require('moment');
 
@@ -75,15 +75,30 @@ export default class ShowDemand extends React.Component{
         super(props);
         this.state = {
             methods: getMethods(),
-            demands: []
+            demands: [],
+            isLoading: false
         };
         getInstanceInfo();
         this.handleClick = this.handleClick.bind(this);
+        this.toggleButton = this.toggleButton.bind(this);
     }
     handleClick() {
+        this.setState({isLoading: true});
         getDemandList().then(
-            demands => {this.setState({demands: demands});}
+            demands => {
+                this.setState({demands: demands});
+            }
+        ).then(
+            ()=>{
+                this.setState({isLoading: false});
+            }
         );
+    }
+    toggleButton(classes){
+        if(this.state.isLoading){
+            classes += " is-loading";
+        }
+        return classes;
     }
     render(){
         const demandlist = [];
@@ -98,8 +113,8 @@ export default class ShowDemand extends React.Component{
             <section className="section">
                 <div className="columns is-centered is-multiline is-gapless">
                     <div className="column is-four-fifths">
-                        <button onClick={this.handleClick} className="button is-rounded is-large is-outlined is-primary">
-                            PUSH
+                        <button onClick={this.handleClick} className={this.toggleButton("button is-large is-primary is-fullwidth")}>
+                        <FontAwesomeIcon icon={['fas', 'sync-alt']} size="1x"/>更新
                         </button>
                     </div>
                 </div>
