@@ -1,5 +1,5 @@
 import React from 'react';
-import { eth, getMethods, getSelectedAddress } from '../infra/web3connect';
+import { getMethods, getSelectedAddress } from '../infra/web3connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 var moment = require('moment');
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { eth, isEnabledWeb3 } from '../infra/web3connect';
+import { isEnabledWeb3 } from '../infra/web3connect';
 import InputDemand from './InputDemand.jsx';
 import ShowDemandList from './ShowDemandList.jsx';
 
