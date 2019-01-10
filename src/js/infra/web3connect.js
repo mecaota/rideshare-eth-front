@@ -11,6 +11,10 @@ function getWeb3(){
   return window.web3;
 }
 
+function getProvider(){
+  return new Web3(window.web3.currentProvider);
+}
+
 function getInstance(){
   const web3js = new Web3(window.web3.currentProvider);
   const contract = new web3js.eth.Contract(contractABI, contractAddress);
@@ -35,19 +39,19 @@ export function getWeb3Event(){
 }
 
 export function getSelectedAddress(){
-  return getInstance().givenProvider.selectedAddress;
+  return getProvider().currentProvider.selectedAddress;
 }
 
 export async function getDemandList(){
   const methods = getMethods();
   var result = [];
   await methods.getAllDemandTokens().call().then(
-    demands => {
-      return Promise.all(demands.map(
-        demand => {
-          return methods.getDemandInfo(demand).call().then(
-            info => {
-              result.push(info);
+    demand_ids => {
+      return Promise.all(demand_ids.map(
+        demand_id => {
+          return methods.getDemandInfo(demand_id).call().then(
+            demand_info => {
+              result.push(getShapedDemandObj(demand_info));
             }
           );
         }
@@ -55,6 +59,54 @@ export async function getDemandList(){
     }
   );
   return result;
+}
+
+export async function getDemandOfOwner(){
+  const methods = getMethods();
+  //tokenOfOwnerByIndex(0)
+  return methods.tokenOfOwnerByIndex(getSelectedAddress(), 0).call().then(
+    demand_id => {
+      return methods.getDemandInfo(demand_id).call().then(
+        demand_info => {
+          return getShapedDemandObj(demand_info);
+        }
+      );
+    }
+  );
+}
+
+function getShapedDemandObj2(demand){
+  return {
+    demand_id: demand[0],
+    minter: demand[1],
+    upd_date: demand[2],
+    est_date: demand[3],
+    price: demand[4],
+    passengers: demand[5],
+    name: demand[6],
+    dept_latitude: demand[7],
+    dept_longitude: demand[8],
+    arrv_name: demand[9],
+    arrv_latitude: demand[10],
+    arrv_longitude: demand[11],
+  };
+}
+
+function getShapedDemandObj(demand){
+  return {
+    demand_id: demand[0],
+    minter: demand[1],
+    upd_date: demand[3],
+    est_date: demand[4],
+    price: demand[2],
+    passengers: demand[5],
+    dept_name: demand[6],
+    dept_latitude: demand[7],
+    dept_longitude: demand[8],
+    arrv_name: demand[9],
+    arrv_latitude: demand[10],
+    arrv_longitude: demand[11],
+  };
 }
 
 export function getMethods(){

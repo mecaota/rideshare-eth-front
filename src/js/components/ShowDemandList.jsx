@@ -11,7 +11,7 @@ class DemandInfo extends React.Component{
     }
     handleClick() {
         console.log(this.props.demand);
-        this.props.methods.buyTicket(this.props.demand[0]).send(
+        this.props.methods.buyTicket(this.props.demand.demand_id).send(
             {from: getSelectedAddress()}
         ).then(
             receipt =>{
@@ -24,7 +24,7 @@ class DemandInfo extends React.Component{
             <div className="column is-half">
                 <div className="card">
                     <header className="card-header">
-                        <p className="card-header-title">デマンドID: {this.props.demand[0]}</p>
+                        <p className="card-header-title">デマンドID: {this.props.demand.demand_id}</p>
                         <a href="#" className="card-header-icon" aria-label="more options"></a>
                     </header>
                     <div className="card-content">
@@ -32,24 +32,28 @@ class DemandInfo extends React.Component{
                             <div className="columns is-mobile is-multiline is-centered">
                                 <div className="column is-full">
                                     <h1><FontAwesomeIcon icon={['fas', 'plane-departure']} pull="left" />出発地</h1>
-                                    <h3>{this.props.demand[6]}</h3>
-                                    <h5>緯度:{this.props.demand[7]}</h5>
-                                    <h5>軽度:{this.props.demand[8]}</h5>
+                                    <h3>{this.props.demand.dept_name}</h3>
+                                    <h5>緯度:{this.props.demand.dept_latitude}</h5>
+                                    <h5>軽度:{this.props.demand.dept_longitude}</h5>
                                 </div>
                                 <div className="column is-full">
                                     <h1><FontAwesomeIcon icon={['fas', 'plane-arrival']} pull="left" />到着地</h1>
-                                    <h3>{this.props.demand[9]}</h3>
-                                    <h5>緯度:{this.props.demand[10]}</h5>
-                                    <h5>軽度:{this.props.demand[11]}</h5>
+                                    <h3>{this.props.demand.arrv_name}</h3>
+                                    <h5>緯度:{this.props.demand.arrv_latitude}</h5>
+                                    <h5>軽度:{this.props.demand.arrv_longitude}</h5>
                                 </div>
+                                <div className="column is-full">
+                                    <h1><FontAwesomeIcon icon={['fas', 'yen-sign']} pull="left" />料金</h1>
+                                    <h3>¥ {this.props.demand.price}</h3>
                                 </div>
+                            </div>
                         </div>
                     </div>
                     <footer className="card-footer">
                         <div className="card-footer-item">
                             発車日時<br/>
-                            {moment.unix(this.props.demand[4]).format('YYYY年MM月DD日(ddd)')}<br/>
-                            {moment.unix(this.props.demand[4]).format('LT')}
+                            {moment.unix(this.props.demand.est_date).format('YYYY年MM月DD日(ddd)')}<br/>
+                            {moment.unix(this.props.demand.est_date).format('LT')}
                         </div>
                         <a className="card-footer-item" onClick={this.handleClick}>
                             <div className="columns is-vcentered is-mobile">
@@ -59,7 +63,7 @@ class DemandInfo extends React.Component{
                                 <div className="column">
                                     乗車する
                                     <br/>
-                                    (残り席数{this.props.demand[5]})
+                                    (残り席数{this.props.demand.passengers})
                                 </div>
                             </div>
                         </a>
@@ -103,7 +107,7 @@ export default class ShowDemandList extends React.Component{
         const demandlist = [];
         this.state.demands.forEach(
             demand => {
-                if(demand[5] > 0){
+                if(demand.demand_id > 0){
                     demandlist.push(<DemandInfo demand={demand} methods={this.state.methods} />);
                 }
             }
@@ -113,7 +117,7 @@ export default class ShowDemandList extends React.Component{
                 <div className="columns is-centered is-multiline is-gapless">
                     <div className="column is-four-fifths">
                         <button onClick={this.handleClick} className={this.toggleButton("button is-large is-primary is-fullwidth")}>
-                        <FontAwesomeIcon icon={['fas', 'sync-alt']} size="1x"/>更新
+                        <FontAwesomeIcon icon={['fas', 'sync-alt']} size="1x"/>デマンドリスト更新
                         </button>
                     </div>
                 </div>
