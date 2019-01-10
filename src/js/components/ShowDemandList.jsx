@@ -69,7 +69,7 @@ class DemandInfo extends React.Component{
         )
     }
 }
-export default class ShowDemand extends React.Component{
+export default class ShowDemandList extends React.Component{
     constructor(props){
         super(props);
         this.state = {

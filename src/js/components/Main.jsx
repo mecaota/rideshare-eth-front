@@ -1,7 +1,7 @@
 import React from 'react';
 import { eth, isEnabledWeb3 } from '../infra/web3connect';
 import InputDemand from './InputDemand.jsx';
-import ShowDemand from './ShowDemand.jsx';
+import ShowDemandList from './ShowDemandList.jsx';
 
 export default class Main extends React.Component{
     constructor(props){
@@ -41,7 +41,7 @@ export default class Main extends React.Component{
                     </div>
                 </div>
                 <InputDemand />
-                <ShowDemand />
+                <ShowDemandList />
             </section>
         )
     }
