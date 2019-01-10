@@ -25,7 +25,6 @@ class DemandInfo extends React.Component{
                 <div className="card">
                     <header className="card-header">
                         <p className="card-header-title">デマンドID: {this.props.demand.demand_id}</p>
-                        <a href="#" className="card-header-icon" aria-label="more options"></a>
                     </header>
                     <div className="card-content">
                         <div className="content">
