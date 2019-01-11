@@ -51,7 +51,11 @@ export async function getDemandList(){
         demand_id => {
           return methods.getDemandInfo(demand_id).call().then(
             demand_info => {
+              console.log("getdemandinfo内部");
+              console.log(demand_info);
               result.push(getShapedDemandObj(demand_info));
+            },error => {
+              console.log(error);
             }
           );
         }
