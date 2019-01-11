@@ -114,7 +114,7 @@ export default class ShowDemandList extends React.Component{
         return(
             <section className="section">
                 <div className="columns is-centered is-multiline is-gapless">
-                    <div className="column is-four-fifths">
+                    <div className="column is-full">
                         <button onClick={this.handleClick} className={this.toggleButton("button is-large is-primary is-fullwidth")}>
                         <FontAwesomeIcon icon={['fas', 'sync-alt']} size="1x"/>デマンドリスト更新
                         </button>

@@ -65,14 +65,28 @@ export async function getDemandList(){
   return result;
 }
 
-export async function getDemandOfOwner(){
+export async function getDemandOfOwner(index){
   const methods = getMethods();
-  //tokenOfOwnerByIndex(0)
-  return methods.tokenOfOwnerByIndex(getSelectedAddress(), 0).call().then(
+  console.log("aiaiaia");
+  console.log(index);
+  return methods.tokenOfOwnerByIndex(getSelectedAddress(), index).call().then(
     demand_id => {
       return methods.getDemandInfo(demand_id).call().then(
         demand_info => {
           return getShapedDemandObj(demand_info);
+        }
+      );
+    }
+  );
+}
+
+export async function getTicketOfOwner(index){
+  const methods = getMethods();
+  return methods.tokenOfOwnerByIndex(getSelectedAddress(), index).call().then(
+    ticket_id => {
+      return methods.getTicketInfo(ticket_id).call().then(
+        ticket_info => {
+          return getShapedTicketObj(ticket_info);
         }
       );
     }
@@ -93,6 +107,15 @@ function getShapedDemandObj2(demand){
     arrv_name: demand[9],
     arrv_latitude: demand[10],
     arrv_longitude: demand[11],
+  };
+}
+
+function getShapedTicketObj(ticket){
+  return {
+    ticket_id: ticket[0],
+    mint_date: ticket[1],
+    demand_id: ticket[2],
+    price: ticket[3]
   };
 }
 

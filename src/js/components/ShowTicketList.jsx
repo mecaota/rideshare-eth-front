@@ -3,7 +3,7 @@ import { getMethods, getSelectedAddress, getDemandOfOwner } from '../infra/web3c
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 var moment = require('moment');
 
-export default class InputDemand extends React.Component{
+export default class ShowTicketList extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -148,7 +148,7 @@ export default class InputDemand extends React.Component{
                     <form action="javascript:void(0)" onSubmit={this.handleSubmit} accept-charset="UTF-8">
                         {/* demand id */}
                         <header className="card-header">
-                            <p className="card-header-title">{this.isDeployed()?"デマンド編集フォーム":"デマンド発行フォーム"}</p>
+                            <p className="card-header-title">{this.isDeployed()?"チケット情報":""}</p>
                         </header>
                         <div className="card-content">
                             <div className="field">
