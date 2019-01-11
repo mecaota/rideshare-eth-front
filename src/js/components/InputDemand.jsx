@@ -24,11 +24,12 @@ export default class InputDemand extends React.Component{
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
         this.setDemandInfo();
     }
     handleSubmit() {
         var methods = getMethods();
-        if(this.state.demand_id>0){
+        if(this.isDeployed()){
             methods.update_demand(
                 this.state.demand_id,
                 this.state.est_date,
@@ -78,11 +79,38 @@ export default class InputDemand extends React.Component{
             this.setState({[event.target.name]: event.target.value});
         }
     }
+    handleDelete() {
+        var methods = getMethods();
+        if(this.isDeployed()){
+            methods.burn(this.state.demand_id).send({from: getSelectedAddress()}).then(
+                receipt => {
+                    this.setState({isLoading: false});
+                    console.log(receipt);
+                }, error => {
+                    this.setState({isLoading: false});
+                    console.log(error);
+                }
+            );
+        }
+    }
+    isDeployed(){
+        return this.state.demand_id>0;
+    }
     toggleButton(classes){
         if(this.state.isLoading){
             classes += " is-loading";
         }
         return classes;
+    }
+    showDeleteButton(){
+        if(this.isDeployed()){
+            return (
+                <button type="button" className={this.toggleButton("button is-large is-danger card-footer-item")} onClick={this.handleDelete}>
+                    <FontAwesomeIcon icon={['fas', 'trash']} pull="left" />
+                    削除
+                </button>
+            )
+        }
     }
     setDemandInfo(){
         this.setState({isLoading: true});
@@ -113,24 +141,19 @@ export default class InputDemand extends React.Component{
     render(){
         return(
             <div className="columns is-centered is-multiline">
-                <div className="column is-four-fifths">
-                    <button onClick={() => this.setState(this.state.FormEnable?{FormEnable:false}:{FormEnable:true})} className="button is-rounded is-large is-outlined is-primary">
-                        {SwitchButton(this.state.FormEnable)}
-                    </button>
-                </div>
                 <div className="column is-full">
                     <div className="card">
                         <form action="javascript:void(0)" onSubmit={this.handleSubmit} accept-charset="UTF-8">
                             {/* demand id */}
                             <header className="card-header">
-                                <p className="card-header-title">{this.state.demand_id>0?"デマンド編集フォーム":"デマンド発行フォーム"}</p>
+                                <p className="card-header-title">{this.isDeployed()?"デマンド編集フォーム":"デマンド発行フォーム"}</p>
                             </header>
                             <div className="card-content">
                                 <div className="field">
                                     <label className="label" htmlFor="demand_id">
                                         <FontAwesomeIcon icon={['fas', 'id-card-alt']} />
                                         デマンドID
-                                        <input className="input" type="text" name="demand_id" value={this.state.demand_id>0?this.state.demand_id:"デマンド未発行"} onChange={this.handleChange} readOnly/>
+                                        <input className="input" type="text" name="demand_id" value={this.isDeployed()?this.state.demand_id:"デマンド未発行"} onChange={this.handleChange} readOnly/>
                                     </label>
                                 </div>
                                 {/* estimated date */}
@@ -202,7 +225,11 @@ export default class InputDemand extends React.Component{
                             </div>
                             {/* submit button */}
                             <footer className="card-footer">
-                                <button type="submit" className={this.toggleButton("button is-large is-primary card-footer-item")}>送信</button>
+                                {this.showDeleteButton()}
+                                <button type="submit" className={this.toggleButton("button is-large is-info card-footer-item")}>
+                                    <FontAwesomeIcon icon={['fas', 'check']} pull="left" />
+                                    送信
+                                </button>
                             </footer>
                             <br />
                         </form>
@@ -211,21 +238,4 @@ export default class InputDemand extends React.Component{
             </div>
         )
     }
-}
-
-function SwitchButton(form_enable){
-    var text = "";
-    var icon = [];
-    if(form_enable){
-        text = "閉じる";
-        icon = ['fas', 'minus-circle'];
-    }else{
-        text = "デマンドを追加";
-        icon = ['fas', 'plus-circle'];
-    }
-    return (
-        <div>
-            <FontAwesomeIcon icon={icon} />{text}
-        </div>
-    )
 }
