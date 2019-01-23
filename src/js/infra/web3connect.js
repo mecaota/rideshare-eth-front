@@ -2,8 +2,10 @@ import Web3 from 'web3';
 
 /* const value */
 
-const contractAddress = "0x2a84ef3370b247f943ed4e8c2dfaa66d3d22c560";
-const contractABI = [{"constant":true,"inputs":[{"name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"purchaser","type":"address"},{"name":"demandId","type":"uint256"},{"name":"price","type":"uint32"}],"name":"mint_ticket","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"to","type":"address"},{"name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"price","type":"uint32"},{"name":"est_date","type":"uint256"},{"name":"passengers","type":"uint8"},{"name":"dept_name","type":"string"},{"name":"dept_lat","type":"int32"},{"name":"dept_lon","type":"int32"},{"name":"arrv_name","type":"string"},{"name":"arrv_lat","type":"int32"},{"name":"arrv_lon","type":"int32"}],"name":"mint_demand","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"ticketId","type":"uint256"}],"name":"takeTicket","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"},{"name":"index","type":"uint256"}],"name":"tokenOfOwnerByIndex","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"payee","type":"address"}],"name":"withdrawPayments","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"demandId","type":"uint256"}],"name":"burn","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"index","type":"uint256"}],"name":"tokenByIndex","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"demandId","type":"uint256"}],"name":"getDemandInfo","outputs":[{"name":"","type":"uint256"},{"name":"","type":"address"},{"name":"","type":"uint32"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"uint8"},{"name":"","type":"string"},{"name":"","type":"int32"},{"name":"","type":"int32"},{"name":"","type":"string"},{"name":"","type":"int32"},{"name":"","type":"int32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"ticketId","type":"uint256"},{"name":"from_address","type":"address"}],"name":"transferTicket","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"demandId","type":"uint256"}],"name":"buyTicket","outputs":[{"name":"","type":"uint256"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"demandId","type":"uint256"},{"name":"change_passengers","type":"int8"}],"name":"addremovePassengers","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"demandId","type":"uint256"},{"name":"name","type":"string"},{"name":"latitude","type":"int32"},{"name":"longitude","type":"int32"}],"name":"changeArrv_spot","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"to","type":"address"},{"name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"tokenId","type":"uint256"},{"name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"demandId","type":"uint256"},{"name":"est_date","type":"uint256"}],"name":"changeEst_date","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"demandId","type":"uint256"},{"name":"name","type":"string"},{"name":"latitude","type":"int32"},{"name":"longitude","type":"int32"}],"name":"changeDept_spot","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"ticketId","type":"uint256"},{"name":"price","type":"uint32"}],"name":"changeTicketPrice","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getAllDemandTokens","outputs":[{"name":"","type":"uint256[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"dest","type":"address"}],"name":"payments","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"},{"name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"index","type":"uint256"}],"name":"DemandByIndex","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"demandId","type":"uint256"},{"name":"price","type":"uint32"}],"name":"changeDemandPrice","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalDemandSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"ticketId","type":"uint256"}],"name":"getTicketInfo","outputs":[{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"uint32"},{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"purchaser","type":"address"},{"indexed":false,"name":"price","type":"uint256"}],"name":"BoughtTicket","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"demandId","type":"uint256"},{"indexed":false,"name":"changed","type":"string"}],"name":"ChangeDemand","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"purchaser","type":"address"},{"indexed":true,"name":"minter","type":"address"},{"indexed":true,"name":"demandId","type":"uint256"}],"name":"TicketAuthorized","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":true,"name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"approved","type":"address"},{"indexed":true,"name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"operator","type":"address"},{"indexed":false,"name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"}];
+const contractAddress = "0xd0c58c1906b83c400f8202d5c9887d305cc8340d";
+const contractABI = [{"constant":false,"inputs":[{"name":"to","type":"address"},{"name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"approveAllMintedTickets","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"demand_id","type":"uint256"}],"name":"burn","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"burnMintedDemand","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"demand_id","type":"uint256"}],"name":"buyTicket","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"passengers","type":"uint8"},{"name":"price","type":"uint32"},{"name":"est_date","type":"uint256"},{"name":"dept_name","type":"string"},{"name":"dept_latitude","type":"int32"},{"name":"dept_longitude","type":"int32"},{"name":"arrv_name","type":"string"},{"name":"arrv_latitude","type":"int32"},{"name":"arrv_longitude","type":"int32"}],"name":"mintDemands","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"tokenId","type":"uint256"},{"name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"to","type":"address"},{"name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"purchaser","type":"address"},{"indexed":false,"name":"price","type":"uint256"}],"name":"BoughtTicket","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"demandId","type":"uint256"},{"indexed":false,"name":"changed","type":"string"}],"name":"ChangeDemand","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":true,"name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"approved","type":"address"},{"indexed":true,"name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"operator","type":"address"},{"indexed":false,"name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"constant":true,"inputs":[{"name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"demand_id","type":"uint256"}],"name":"getDemandInfo","outputs":[{"name":"","type":"bool"},{"name":"","type":"bool"},{"name":"","type":"uint256"},{"name":"","type":"uint32"},{"name":"","type":"uint256"},{"name":"","type":"string"},{"name":"","type":"int32"},{"name":"","type":"int32"},{"name":"","type":"string"},{"name":"","type":"int32"},{"name":"","type":"int32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"},{"name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"index","type":"uint256"}],"name":"tokenByIndex","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"},{"name":"index","type":"uint256"}],"name":"tokenOfOwnerByIndex","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}];
+
+const GEODOUBLE = 10000000;
 
 /* local functions */
 
@@ -21,6 +23,41 @@ function getInstance(){
   return contract;
 }
 
+function getMethods(){
+  return getInstance().methods;
+}
+
+async function getTokenList(demand_ids){
+  const methods = getMethods();
+  return Promise.all(demand_ids.map(
+    demand_id => {
+      return methods.getDemandInfo(demand_id).call().then(
+        demand_info => {
+          return getShapedDemandObj(demand_info);
+        },error => {
+          console.log(error);
+        }
+      );
+    }
+  ));
+}
+
+async function getShapedDemandObj(demand){
+  return {
+    isMine: demand[0],
+    isPurchesed: demand[1],
+    item_id: demand[2],
+    price: demand[3],
+    est_date: demand[4],
+    dept_name: demand[5],
+    dept_latitude: demand[6]/GEODOUBLE,
+    dept_longitude: demand[7]/GEODOUBLE,
+    arrv_name: demand[8],
+    arrv_latitude: demand[9]/GEODOUBLE,
+    arrv_longitude: demand[10]/GEODOUBLE,
+  };
+}
+
 /* export functions */
 
 export function isEnabledWeb3(){
@@ -35,7 +72,9 @@ export function isEnabledWeb3(){
 }
 
 export function getWeb3Event(){
-  return (getWeb3().eth.getBlock("pending").transactions.length > 0);
+  return web3.eth.subscribe('pendingTransactions', function(error, result){
+    if (!error){console.log(result);}
+  }).on("data", transaction => console.log(transaction));
 }
 
 export function getSelectedAddress(){
@@ -44,100 +83,105 @@ export function getSelectedAddress(){
 
 export async function getDemandList(){
   const methods = getMethods();
-  var result = [];
-  await methods.getAllDemandTokens().call().then(
-    demand_ids => {
-      return Promise.all(demand_ids.map(
-        demand_id => {
-          return methods.getDemandInfo(demand_id).call().then(
-            demand_info => {
-              console.log("getdemandinfo内部");
-              console.log(demand_info);
-              result.push(getShapedDemandObj(demand_info));
-            },error => {
-              console.log(error);
-            }
-          );
-        }
-      ));
-    }
-  );
-  return result;
+  return new Promise((resolve)=>{
+    resolve(methods.totalSupply().call());
+  }).then(numOfDemand => {
+    return Promise.all(Array.from({length: numOfDemand}, (v, k) => k).map(
+      indexOfDemand => {
+        return methods.tokenByIndex(indexOfDemand).call();
+      }
+    ));
+  }).then(demand_ids => {
+    return getTokenList(demand_ids);
+  });
 }
 
-export async function getDemandOfOwner(index){
+export async function getDemandOfOwnerList(){
   const methods = getMethods();
-  console.log("aiaiaia");
-  console.log(index);
-  return methods.tokenOfOwnerByIndex(getSelectedAddress(), index).call().then(
-    demand_id => {
-      return methods.getDemandInfo(demand_id).call().then(
-        demand_info => {
-          return getShapedDemandObj(demand_info);
-        }
-      );
-    }
-  );
+  return new Promise((resolve)=>{
+    resolve(methods.balanceOf(getSelectedAddress()).call());
+  }).then(numOfDemand => {
+    return Promise.all(Array.from({length: numOfDemand}, (v, k) => k).map(
+      indexOfDemand => {
+        return methods.tokenOfOwnerByIndex(getSelectedAddress(), indexOfDemand).call();
+      }
+    ));
+  }).then(demand_ids => {
+    return getTokenList(demand_ids);
+  });
 }
 
-export async function getTicketOfOwner(index){
+export async function burnMintedDemand(){
   const methods = getMethods();
-  return methods.tokenOfOwnerByIndex(getSelectedAddress(), index).call().then(
-    ticket_id => {
-      return methods.getTicketInfo(ticket_id).call().then(
-        ticket_info => {
-          return getShapedTicketObj(ticket_info);
-        }
-      );
-    }
+  return methods.burnMintedDemand().send({from: getSelectedAddress()}).then(
+    receipt => console.log(receipt), error => console.log(error)
   );
 }
 
-function getShapedDemandObj2(demand){
-  return {
-    demand_id: demand[0],
-    minter: demand[1],
-    upd_date: demand[2],
-    est_date: demand[3],
-    price: demand[4],
-    passengers: demand[5],
-    name: demand[6],
-    dept_latitude: demand[7],
-    dept_longitude: demand[8],
-    arrv_name: demand[9],
-    arrv_latitude: demand[10],
-    arrv_longitude: demand[11],
-  };
+export async function burn(demand_id){
+  const methods = getMethods();
+  return methods.burn(demand_id).call().then(
+    result => console.log(result), error => console.log(error)
+  )
 }
 
-function getShapedTicketObj(ticket){
-  return {
-    ticket_id: ticket[0],
-    mint_date: ticket[1],
-    demand_id: ticket[2],
-    price: ticket[3]
-  };
+export async function buyTicket(demand_id){
+  const methods = getMethods();
+  return methods.buyTicket(demand_id).call().then(
+    result => console.log(result), error => console.log(error)
+  )
 }
 
-function getShapedDemandObj(demand){
-  return {
-    demand_id: demand[0],
-    minter: demand[1],
-    upd_date: demand[3],
-    est_date: demand[4],
-    price: demand[2],
-    passengers: demand[5],
-    dept_name: demand[6],
-    dept_latitude: demand[7],
-    dept_longitude: demand[8],
-    arrv_name: demand[9],
-    arrv_latitude: demand[10],
-    arrv_longitude: demand[11],
-  };
+export async function mintDemands(
+  passengers,
+  price,
+  est_date,
+  dept_name,
+  dept_latitude,
+  dept_longitude,
+  arrv_name,
+  arrv_latitude,
+  arrv_longitude
+){
+  const methods = getMethods();
+  return methods.mintDemands(
+    passengers,
+    price,
+    est_date,
+    dept_name,
+    Math.round(dept_latitude*GEODOUBLE),
+    Math.round(dept_longitude*GEODOUBLE),
+    arrv_name,
+    Math.round(arrv_latitude*GEODOUBLE),
+    Math.round(arrv_longitude*GEODOUBLE)
+  ).send({from: getSelectedAddress()}).then(
+    receipt => console.log(receipt), error => console.log(error)
+  );
 }
 
-export function getMethods(){
-  return getInstance().methods;
+export async function mintDemands2(
+  passengers,
+  price,
+  est_date,
+  dept_name,
+  dept_latitude,
+  dept_longitude,
+  arrv_name,
+  arrv_latitude,
+  arrv_longitude
+){
+  return Promise.resolve(
+    console.log(passengers,
+      price,
+      est_date,
+      dept_name,
+      Math.round(dept_latitude*GEODOUBLE),
+      Math.round(dept_longitude*GEODOUBLE),
+      arrv_name,
+      Math.round(arrv_latitude*GEODOUBLE),
+      Math.round(arrv_longitude*GEODOUBLE)
+    )
+  );
 }
 
 export function getInstanceInfo(){

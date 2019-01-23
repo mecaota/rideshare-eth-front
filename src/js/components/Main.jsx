@@ -43,8 +43,8 @@ export default class Main extends React.Component{
                 </div>
                 <div className="columns is-multiline">
                     <InputDemand />
-                    <ShowTicketList />
-                    <ShowDemandList />
+                    {/*<ShowTicketList />*/}
+                    {/*<ShowDemandList />*/}
                 </div>
             </section>
         )
