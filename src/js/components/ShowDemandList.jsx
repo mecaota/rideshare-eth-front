@@ -179,22 +179,35 @@ export default class ShowDemandList extends React.Component{
             }
         );
         return(
-            <section className="section">
-                <div className="columns is-centered is-multiline is-gapless">
+            <section className="section column is-full">
+                <div className="columns is-gapless">
                     <div className="column is-full">
-                        <button onClick={this.handleClick} className={this.toggleButton("button is-large is-primary is-fullwidth")}>
+                        <button onClick={this.handleClick} className={this.toggleButton("button is-large is-info is-fullwidth")}>
                         <FontAwesomeIcon icon={['fas', 'sync-alt']} size="1x"/>デマンドリスト更新
                         </button>
                     </div>
                 </div>
-                <div className="columns is-centered is-multiline">
-                    <div className="column is-full">購入済み</div>
+                <hr/>
+                <div className="columns is-multiline">
+                    <div className="column is-full">
+                        <h1 class="title">
+                            <FontAwesomeIcon icon={['fas', 'shopping-cart']} size="1x"/>
+                            購入済み
+                        </h1>
+                    </div>
                     {purchesedlist}
                 </div>
-                <div className="columns is-centered is-multiline">
-                    <div className="column is-full">デマンド一覧</div>
+                <hr/>
+                <div className="columns is-multiline">
+                    <div className="column is-full">
+                        <h1 class="title">
+                            <FontAwesomeIcon icon={['fas', 'list-alt']} size="1x"/>
+                            デマンド一覧
+                        </h1>
+                    </div>
                     {demandlist}
                 </div>
+                <hr/>
             </section>
         )
     }
