@@ -1,5 +1,5 @@
 import React from 'react';
-import { getSelectedAddress, getDemandOfOwnerList, mintDemands, burnMintedDemand } from '../infra/web3connect';
+import { getDemandOfOwnerList, mintDemands, burnMintedDemand } from '../infra/web3connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 var moment = require('moment');
 
