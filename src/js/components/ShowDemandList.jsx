@@ -10,6 +10,7 @@ class DemandInfo extends React.Component{
             passengers: this.props.passengers,
             isMine: this.props.demand.isMine,
             isPurchesed: this.props.demand.isPurchesed,
+            isOwner: this.props.demand.isOwner,
             item_id: this.props.demand.item_id,
             demand_id: this.props.demand.demand_id,
             price: this.props.demand.price,
@@ -27,7 +28,6 @@ class DemandInfo extends React.Component{
     handleClick() {
         Promise.resolve(this.setState({isLoading: true})).then(
             ()=> {
-                console.log(this.state);
                 buyTicket(this.state.demand_id);
             }
         ).then(
@@ -37,26 +37,56 @@ class DemandInfo extends React.Component{
     showButton(){
         if(this.state.isLoading){
             return (
-                <div className="columns is-vcentered is-mobile">
-                    <div className="column is-1">
-                        <FontAwesomeIcon icon={['fas', 'sync']} size="1x" pull="left" spin />
+                <div className="card-footer-item" onClick={this.handleClick}>
+                    <div className="columns is-vcentered is-mobile">
+                        <div className="column is-1">
+                            <FontAwesomeIcon icon={['fas', 'sync']} size="1x" pull="left" spin />
+                        </div>
+                        <div className="column">
+                            購入中・・・
+                        </div>
                     </div>
-                    <div className="column">
-                        購入中・・・
+                </div>
+            )
+        }else if(this.state.isOwner){
+            return (
+                <div className="card-footer-item" onClick={this.handleClick} >
+                    <div className="columns is-vcentered is-mobile">
+                        <div className="column is-1">
+                            <FontAwesomeIcon icon={['fas', 'hand-holding']} size="1x" pull="left" />
+                        </div>
+                        <div className="column">
+                            自分のデマンド<br/>
+                        </div>
+                    </div>
+                </div>
+            )
+        }else if(this.state.isMine){
+            return (
+                <div className="card-footer-item" onClick={this.handleClick} >
+                    <div className="columns is-vcentered is-mobile">
+                        <div className="column is-1">
+                            <FontAwesomeIcon icon={['fas', 'hand-holding']} size="1x" pull="left" />
+                        </div>
+                        <div className="column">
+                            購入したデマンド<br/>
+                        </div>
                     </div>
                 </div>
             )
         }else{
             return (
-                <div className="columns is-vcentered is-mobile">
-                    <div className="column is-1">
-                        <FontAwesomeIcon icon={['fas', 'car-side']} size="1x" pull="left" />
+                <a className="card-footer-item" onClick={this.handleClick}>
+                    <div className="columns is-vcentered is-mobile">
+                        <div className="column is-1">
+                            <FontAwesomeIcon icon={['fas', 'car-side']} size="1x" pull="left" />
+                        </div>
+                        <div className="column">
+                            乗車する<br/>
+                            (残り席数{this.state.passengers})
+                        </div>
                     </div>
-                    <div className="column">
-                        乗車する<br/>
-                        (残り席数{this.state.passengers})
-                    </div>
-                </div>
+                </a>
             )
         }
     }
@@ -66,6 +96,7 @@ class DemandInfo extends React.Component{
                 <div className="card">
                     <header className="card-header">
                         <p className="card-header-title">デマンド識別ID: {this.state.item_id}</p>
+                        <p className="card-header-title">デマンドID: {this.state.demand_id}</p>
                     </header>
                     <div className="card-content">
                         <div className="content">
@@ -95,9 +126,7 @@ class DemandInfo extends React.Component{
                             {moment.unix(this.state.est_date).format('YYYY年MM月DD日(ddd)')}<br/>
                             {moment.unix(this.state.est_date).format('LT')}
                         </div>
-                        <a className="card-footer-item" onClick={this.handleClick}>
-                            {this.showButton()}
-                        </a>
+                        {this.showButton()}
                     </footer>
                 </div>
             </div>
@@ -134,11 +163,18 @@ export default class ShowDemandList extends React.Component{
         return classes;
     }
     render(){
-        const demandlist = [];
+        let demandlist = [];
+        let purchesedlist = [];
+        let showed_item_id = 0;
         this.state.demands.forEach(
             demand => {
-                if(demand.demand_id > 0){
-                    demandlist.push(<DemandInfo demand={demand} passengers={Object.keys(this.state.demands).length} />);
+                if(demand.demand_id>0){
+                    if(demand.isMine){
+                        purchesedlist.push(<DemandInfo demand={demand} passengers={Object.keys(this.state.demands).length} />);
+                    }else if(!demand.isPurchesed){
+                        demandlist.push(<DemandInfo demand={demand} passengers={Object.keys(this.state.demands).length} />);
+                    }
+                    showed_item_id = demand.item_id;
                 }
             }
         );
@@ -152,6 +188,11 @@ export default class ShowDemandList extends React.Component{
                     </div>
                 </div>
                 <div className="columns is-centered is-multiline">
+                    <div className="column is-full">購入済み</div>
+                    {purchesedlist}
+                </div>
+                <div className="columns is-centered is-multiline">
+                    <div className="column is-full">デマンド一覧</div>
                     {demandlist}
                 </div>
             </section>
