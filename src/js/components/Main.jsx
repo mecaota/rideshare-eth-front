@@ -11,20 +11,54 @@ export default class Main extends React.Component{
             isWeb3: isEnabledWeb3()
         };
     }
-
     showInstance(){
         console.log("Web3 is enabled:");
         console.log(this.state.isWeb3);
-        if(isEnabledWeb3()){
+        if(this.state.isWeb3){
             return (
                 <div className="notification is-primary">
-                    <p>Web3 is connected. Watch your console</p>
+                    <p>Web3 is connected</p>
                 </div>
             );
         }else{
             return (
                 <div className="notification is-danger">
-                    <p>You need to install MetaMask for this app to work!</p>
+                    <p>Web3 is not connected</p>
+                    <p>MetaMaskをインストールする必要があります。</p>
+                </div>
+            );
+        }
+    }
+    showGUI(){
+        if(this.state.isWeb3){
+            return (
+                <div className="columns is-multiline">
+                    <div className="column is-full">
+                        <div className="content has-text-centered">
+                            <div className="notification is-primary">
+                                <p>Web3 is connected</p>
+                            </div>
+                        </div>
+                    </div>
+                    <InputDemand />
+                    <ShowDemandList />
+                </div>
+            );
+        }else{
+            return (
+                <div className="columns is-multiline">
+                    <div className="column is-full">
+                        <div className="content has-text-centered">
+                            <div className="notification is-danger">
+                                <p>Web3 is not connected</p>
+                            </div>
+                            <div className="notification is-warning">
+                                <p>MetaMaskをインストールする必要があります。</p>
+                                <p>下記リンクからダウンロードしてご利用ください。</p>
+                                <a href="https://metamask.io/" className="button is-inverted is-outlined is-rounded is-warning" >https://metamask.io/</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             );
         }
@@ -33,17 +67,7 @@ export default class Main extends React.Component{
     render(){
         return(
             <section className="section">
-                <div className="columns">
-                    <div className="column">
-                        <div className="content">
-                            <p>{this.showInstance()}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="columns is-multiline">
-                    <InputDemand />
-                    <ShowDemandList />
-                </div>
+                {this.showGUI()}
             </section>
         )
     }
