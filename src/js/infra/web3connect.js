@@ -27,7 +27,7 @@ function getMethods(){
   return getInstance().methods;
 }
 
-async function getTokenList(demand_ids){
+function getTokenList(demand_ids){
   const methods = getMethods();
   return Promise.all(demand_ids.map(
     demand_id => {
@@ -51,7 +51,7 @@ function getIsOwner(demand_id){
   )
 }
 
-async function getShapedDemandObj(demand, demand_id){
+function getShapedDemandObj(demand, demand_id){
   return getIsOwner(demand_id).then(
     isOwner => {
       return {
@@ -96,7 +96,7 @@ export function getSelectedAddress(){
   return getProvider().currentProvider.selectedAddress;
 }
 
-export async function getDemandList(){
+export function getDemandList(){
   const methods = getMethods();
   return new Promise((resolve)=>{
     resolve(methods.totalSupply().call({from: getSelectedAddress()}));
@@ -111,7 +111,7 @@ export async function getDemandList(){
   });
 }
 
-export async function getDemandOfOwnerList(){
+export function getDemandOfOwnerList(){
   const methods = getMethods();
   return new Promise((resolve)=>{
     resolve(methods.balanceOf(getSelectedAddress()).call({from: getSelectedAddress()}));
@@ -126,28 +126,28 @@ export async function getDemandOfOwnerList(){
   });
 }
 
-export async function burnMintedDemand(){
+export function burnMintedDemand(){
   const methods = getMethods();
   return methods.burnMintedDemand().send({from: getSelectedAddress()}).then(
     receipt => console.log(receipt), error => console.log(error)
   );
 }
 
-export async function burn(demand_id){
+export function burn(demand_id){
   const methods = getMethods();
   return methods.burn(demand_id).call({from: getSelectedAddress()}).then(
     result => console.log(result), error => console.log(error)
-  )
+  );
 }
 
-export async function buyTicket(demand_id){
+export function buyTicket(demand_id){
   const methods = getMethods();
   return methods.buyTicket(demand_id).send({from: getSelectedAddress()}).then(
     result => console.log(result), error => console.log(error)
-  )
+  );
 }
 
-export async function mintDemands(
+export function mintDemands(
   passengers,
   price,
   est_date,
