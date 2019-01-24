@@ -55,11 +55,21 @@ function getIsOwner(demand_id){
   )
 }
 
+function isApproved(demand_id){
+  const methods = getMethods();
+  return methods.getApproved(demand_id).call({from: getSelectedAddress()}).then(
+    approvedAddress => {
+      return approvedAddress == getSelectedAddress();
+    }
+  );
+}
+
 function getShapedDemandObj(demand, demand_id){
-  return getIsOwner(demand_id).then(
-    isOwner => {
+  return Promise.all([getIsOwner(demand_id), isApproved(demand_id)]).then(
+    results => {
       return {
-        isOwner: isOwner,
+        isOwner: results[0],
+        isAproved: results[1],
         isMine: demand[0],
         isPurchesed: demand[1],
         item_id: demand[2],
@@ -74,7 +84,7 @@ function getShapedDemandObj(demand, demand_id){
         arrv_longitude: demand[10]/GEODOUBLE,
       };
     }
-  )
+  );
 }
 
 /* export functions */
@@ -145,6 +155,24 @@ export function buyTicket(demand_id){
   return methods.buyTicket(demand_id).send({from: getSelectedAddress()}).then(
     result => console.log(result), error => console.log(error)
   );
+}
+
+export function approveAllMintedTickets(){
+  const methods = getMethods();
+  return methods.approveAllMintedTickets().send({from: getSelectedAddress()}).then(
+    result => console.log(result), error => console.log(error)
+  );
+}
+
+export function authorizeDemand(demand_id){
+  const methods = getMethods();
+  return methods.ownerOf(demand_id).call({from: getSelectedAddress()}).then(
+    owner => {
+      methods.safeTransferFrom(selectedAddress(), owner, demand_id).call({from: getSelectedAddress()}).then(
+        result => console.log(result), error => console.log(error)
+      );
+    }
+  )
 }
 
 export function mintDemands(

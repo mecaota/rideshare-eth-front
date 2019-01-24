@@ -1,5 +1,5 @@
 import React from 'react';
-import { buyTicket, getDemandList } from '../infra/web3connect';
+import { buyTicket, getDemandList, authorizeDemand } from '../infra/web3connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 var moment = require('moment');
 
@@ -8,6 +8,7 @@ class DemandInfo extends React.Component{
         super(props);
         this.state = {
             passengers: this.props.passengers,
+            isAproved: this.props.isAproved,
             isMine: this.props.demand.isMine,
             isPurchesed: this.props.demand.isPurchesed,
             isOwner: this.props.demand.isOwner,
@@ -24,11 +25,21 @@ class DemandInfo extends React.Component{
             isLoading: false
         };
         this.handleClick = this.handleClick.bind(this);
+        this.handleAuthorize = this.handleAuthorize.bind(this);
     }
     handleClick() {
         Promise.resolve(this.setState({isLoading: true})).then(
             ()=> {
                 buyTicket(this.state.demand_id);
+            }
+        ).then(
+            ()=>{this.setState({isLoading: false});}
+        )
+    }
+    handleAuthorize(){
+        Promise.resolve(this.setState({isLoading: true})).then(
+            ()=> {
+                authorizeDemand(this.state.demand_id);
             }
         ).then(
             ()=>{this.setState({isLoading: false});}
@@ -62,18 +73,33 @@ class DemandInfo extends React.Component{
                 </div>
             )
         }else if(this.state.isMine){
-            return (
-                <div className="card-footer-item" onClick={this.handleClick} >
-                    <div className="columns is-vcentered is-mobile">
-                        <div className="column is-1">
-                            <FontAwesomeIcon icon={['fas', 'hand-holding']} size="1x" pull="left" />
+            if(this.state.isAproved){
+                return (
+                    <a className="card-footer-item" onClick={this.handleAuthorize} >
+                        <div className="columns is-vcentered is-mobile">
+                            <div className="column is-1">
+                                <FontAwesomeIcon icon={['fas', 'car']} size="1x" pull="left" />
+                            </div>
+                            <div className="column">
+                                乗車手続きを行う<br/>
+                            </div>
                         </div>
-                        <div className="column">
-                            購入したデマンド<br/>
+                    </a>
+                )
+            }else{
+                return (
+                    <div className="card-footer-item" onClick={this.handleClick} >
+                        <div className="columns is-vcentered is-mobile">
+                            <div className="column is-1">
+                                <FontAwesomeIcon icon={['fas', 'hand-holding']} size="1x" pull="left" />
+                            </div>
+                            <div className="column">
+                                購入したデマンド<br/>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )
+                )
+            }
         }else{
             return (
                 <a className="card-footer-item" onClick={this.handleClick}>

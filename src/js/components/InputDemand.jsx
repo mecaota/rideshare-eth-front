@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDemandOfOwnerList, mintDemands, burnMintedDemand } from '../infra/web3connect';
+import { getDemandOfOwnerList, mintDemands, burnMintedDemand, approveAllMintedTickets } from '../infra/web3connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 var moment = require('moment');
 
@@ -25,11 +25,11 @@ export default class InputDemand extends React.Component{
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleApprove = this.handleApprove.bind(this);
         this.setDemandInfo();
     }
     setDemandInfo(){
-        Promise.resolve(this.setState({isLoading: true})
-        ).then(
+        return Promise.resolve(this.setState({isLoading: true})).then(
             ()=>{return getDemandOfOwnerList();}
         ).then(
             demands => {
@@ -104,13 +104,28 @@ export default class InputDemand extends React.Component{
     }
     handleDelete() {
         if(this.isDeployed()){
-            this.setState({isLoading: true});
-            burnMintedDemand().then(
-                ()=>this.setDemandInfo()
+            Promise.resolve(this.setState({isLoading: true})).then(
+                ()=>{return burnMintedDemand();}
             ).then(
-                ()=>this.setState({isLoading: false})
+                ()=>{return this.setDemandInfo();}
+            ).then(
+                ()=>{return this.setState({isLoading: false});}
             );
         }
+    }
+    handleApprove(){
+        if(this.isOveredTime()){
+            Promise.resolve(this.setState({isLoading: true})).then(
+                ()=>{return approveAllMintedTickets();}
+            ).then(
+                ()=>{return this.setDemandInfo();}
+            ).then(
+                ()=>{return this.setState({isLoading: false});}
+            );
+        }
+    }
+    isOveredTime(){
+        return this.state.est_date < moment().unix();
     }
     isDeployed(){
         return this.state.item_id>0;
@@ -130,18 +145,37 @@ export default class InputDemand extends React.Component{
     }
     showButton(){
         if(this.isDeployed()){
-            return (
-                <button type="button" className={this.toggleButton("button is-large is-danger card-footer-item")} onClick={this.handleDelete}>
-                    <FontAwesomeIcon icon={['fas', 'trash']} pull="left" />
-                    デマンド削除
-                </button>
-            )
+            if(this.isOveredTime()){
+                return (
+                    <footer className="card-footer">
+                        <a type="button" className={this.toggleButton("button is-large is-danger card-footer-item")} onClick={this.handleDelete}>
+                            <FontAwesomeIcon icon={['fas', 'trash']} pull="left" />
+                            デマンド削除
+                        </a>
+                        <a type="button" className={this.toggleButton("button is-large is-info card-footer-item")} onClick={this.handleApprove}>
+                            <FontAwesomeIcon icon={['fas', 'user-friends']} pull="left" />
+                            マッチングを承認する
+                        </a>
+                    </footer>
+                )
+            }else{
+                return (
+                    <footer className="card-footer">
+                        <button type="button" className={this.toggleButton("button is-large is-danger card-footer-item")} onClick={this.handleDelete}>
+                            <FontAwesomeIcon icon={['fas', 'trash']} pull="left" />
+                            デマンド削除
+                        </button>
+                    </footer>
+                )
+            }
         }else{
             return (
-                <button type="submit" className={this.toggleButton("button is-large is-info card-footer-item")}>
-                    <FontAwesomeIcon icon={['fas', 'check']} pull="left" />
-                    デマンド発行
-                </button>
+                <footer className="card-footer">
+                    <button type="submit" className={this.toggleButton("button is-large is-info card-footer-item")}>
+                        <FontAwesomeIcon icon={['fas', 'check']} pull="left" />
+                        デマンド発行
+                    </button>
+                </footer>
             )
         }
     }
@@ -249,9 +283,7 @@ export default class InputDemand extends React.Component{
                             </div>
                         </div>
                         {/* submit button */}
-                        <footer className="card-footer">
-                            {this.showButton()}
-                        </footer>
+                        {this.showButton()}
                         <br />
                     </form>
                 </div>
