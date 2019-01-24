@@ -27,6 +27,10 @@ function getMethods(){
   return getInstance().methods;
 }
 
+function getSelectedAddress(){
+  return getProvider().currentProvider.selectedAddress;
+}
+
 function getTokenList(demand_ids){
   const methods = getMethods();
   return Promise.all(demand_ids.map(
@@ -90,10 +94,6 @@ export function getWeb3Event(){
   return web3.eth.subscribe('pendingTransactions', function(error, result){
     if (!error){console.log(result);}
   }).on("data", transaction => console.log(transaction));
-}
-
-export function getSelectedAddress(){
-  return getProvider().currentProvider.selectedAddress;
 }
 
 export function getDemandList(){
@@ -172,20 +172,4 @@ export function mintDemands(
   ).send({from: getSelectedAddress()}).then(
     receipt => console.log(receipt), error => console.log(error)
   );
-}
-
-export function getInstanceInfo(){
-  const contract = getInstance();
-  const methods = contract.methods;
-  console.log("Web3 provider accounts:");
-  console.log(contract);
-  console.log(contract.givenProvider);
-  console.log("networkVersion:");
-  console.log(contract.givenProvider.networkVersion);
-  console.log("contract methodsだす");
-  console.log(methods);
-  console.log("contract ownerOf");
-  console.log(methods.ownerOf(getSelectedAddress()));
-  //console.log("contract getAlDemandokens");
-  //console.log(getDemandList());
 }
