@@ -2,7 +2,6 @@ import React from 'react';
 import { isEnabledWeb3 } from '../infra/web3connect';
 import InputDemand from './InputDemand.jsx';
 import ShowDemandList from './ShowDemandList.jsx';
-import ShowTicketList from './ShowTicketList.jsx';
 
 export default class Main extends React.Component{
     constructor(props){
@@ -43,7 +42,6 @@ export default class Main extends React.Component{
                 </div>
                 <div className="columns is-multiline">
                     <InputDemand />
-                    {/*<ShowTicketList />*/}
                     <ShowDemandList />
                 </div>
             </section>
