@@ -11,24 +11,6 @@ export default class Main extends React.Component{
             isWeb3: isEnabledWeb3()
         };
     }
-    showInstance(){
-        console.log("Web3 is enabled:");
-        console.log(this.state.isWeb3);
-        if(this.state.isWeb3){
-            return (
-                <div className="notification is-primary">
-                    <p>Web3 is connected</p>
-                </div>
-            );
-        }else{
-            return (
-                <div className="notification is-danger">
-                    <p>Web3 is not connected</p>
-                    <p>MetaMaskをインストールする必要があります。</p>
-                </div>
-            );
-        }
-    }
     showGUI(){
         if(this.state.isWeb3){
             return (

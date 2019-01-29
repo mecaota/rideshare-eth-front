@@ -100,6 +100,13 @@ export function isEnabledWeb3(){
   }
 }
 
+export function checkProvider(){
+  var provider = getInstance().networkVersion;
+  console.log("Provider Version:");
+  console.log(provider);
+  return provider;
+}
+
 export function getWeb3Event(){
   return web3.eth.subscribe('pendingTransactions', function(error, result){
     if (!error){console.log(result);}
