@@ -204,7 +204,7 @@ export default class InputDemand extends React.Component{
                                         <label className="label" htmlFor="est_date">
                                             <FontAwesomeIcon icon={['fas', 'clock']} />
                                             出発予定日時
-                                            <input className="input" type="datetime-local" name="est_date" min={moment().format("YYYY-MM-DDTHH:mm")} value={moment.unix(this.state.est_date).format("YYYY-MM-DDTHH:mm")} onChange={this.handleChange}/>
+                                            <input required className="input" type="datetime-local" name="est_date" min={moment().format("YYYY-MM-DDTHH:mm")} value={moment.unix(this.state.est_date).format("YYYY-MM-DDTHH:mm")} onChange={this.handleChange}/>
                                         </label>
                                     </div>
                                     <hr />
@@ -223,7 +223,7 @@ export default class InputDemand extends React.Component{
                                         <label className="label" htmlFor="passengers">
                                             <FontAwesomeIcon icon={['fas', 'users']} />
                                             募集人数
-                                            <input className="input" type="number" name="passengers" required min='1' max='256' value={this.state.passengers} onChange={this.handleChange} />
+                                            <input required className="input" type="number" name="passengers" min='1' max='256' value={this.state.passengers} onChange={this.handleChange} />
                                         </label>
                                     </div>
                                     <hr />
@@ -236,21 +236,21 @@ export default class InputDemand extends React.Component{
                                     <div className="field">
                                         <label className="label" htmlFor="dept_name">
                                             出発場所名
-                                            <input className="input" type="text" name="dept_name" value={this.state.dept_name} onChange={this.handleChange} />
+                                            <input required className="input" type="text" name="dept_name" value={this.state.dept_name} onChange={this.handleChange} />
                                         </label>
                                     </div>
                                     {/* dept_latitude */}
                                     <div className="field">
                                         <label className="label" htmlFor="dept_latitude">
                                             出発緯度
-                                            <input className="input" type="number" name="dept_latitude" value={this.state.dept_latitude} onChange={this.handleChange} />
+                                            <input className="input" type="number" name="dept_latitude" max="90" min="-90" step="0.000001" value={this.state.dept_latitude} onChange={this.handleChange} />
                                         </label>
                                     </div>
                                     {/* dept_longtitude */}
                                     <div className="field">
                                         <label className="label" htmlFor="dept_longitude">
                                             出発経度
-                                            <input className="input" type="number" name="dept_longitude" value={this.state.dept_longitude} onChange={this.handleChange} />
+                                            <input className="input" type="number" name="dept_longitude" max="180" min="-180" step="0.000001" value={this.state.dept_longitude} onChange={this.handleChange} />
                                         </label>
                                     </div>
                                     <hr />
@@ -261,21 +261,21 @@ export default class InputDemand extends React.Component{
                                         <h1 className="is-size-4"><FontAwesomeIcon icon={['fas', 'plane-arrival']} />到着地</h1>
                                         <label className="label" htmlFor="arrv_name">
                                             到着場所名
-                                            <input className="input" type="text" name="arrv_name" value={this.state.arrv_name} onChange={this.handleChange} />
+                                            <input required className="input" type="text" name="arrv_name" value={this.state.arrv_name} onChange={this.handleChange} />
                                         </label>
                                     </div>
                                     {/* arrv_latitude */}
                                     <div className="field">
                                         <label className="label" htmlFor="arrv_latitude">
                                             到着緯度
-                                            <input className="input" type="number" name="arrv_latitude" value={this.state.arrv_latitude} onChange={this.handleChange} />
+                                            <input className="input" type="number" name="arrv_latitude" max="180" min="-180" step="0.000001" value={this.state.arrv_latitude} onChange={this.handleChange} />
                                         </label>
                                     </div>
                                     {/* arrv_longtitude */}
                                     <div className="field">
                                         <label className="label" htmlFor="arrv_longitude">
                                             到着経度
-                                            <input className="input" type="number" name="arrv_longitude" value={this.state.arrv_longitude} onChange={this.handleChange} />
+                                            <input className="input" type="number" name="arrv_longitude" max="180" min="-180" step="0.000001" value={this.state.arrv_longitude} onChange={this.handleChange} />
                                         </label>
                                     </div>
                                     <hr />
