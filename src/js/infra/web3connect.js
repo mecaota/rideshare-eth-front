@@ -101,10 +101,7 @@ export function isEnabledWeb3(){
 }
 
 export function checkProvider(){
-  var provider = getInstance().networkVersion;
-  console.log("Provider Version:");
-  console.log(provider);
-  return provider;
+  return getInstance().givenProvider.networkVersion==4;
 }
 
 export function getWeb3Event(){
