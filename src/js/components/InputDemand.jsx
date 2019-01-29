@@ -268,7 +268,7 @@ export default class InputDemand extends React.Component{
                                     <div className="field">
                                         <label className="label" htmlFor="arrv_latitude">
                                             到着緯度
-                                            <input className="input" type="number" name="arrv_latitude" max="180" min="-180" step="0.000001" value={this.state.arrv_latitude} onChange={this.handleChange} />
+                                            <input className="input" type="number" name="arrv_latitude" max="90" min="-90" step="0.000001" value={this.state.arrv_latitude} onChange={this.handleChange} />
                                         </label>
                                     </div>
                                     {/* arrv_longtitude */}

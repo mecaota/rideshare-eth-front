@@ -65,6 +65,8 @@ function isApproved(demand_id){
 }
 
 function getShapedDemandObj(demand, demand_id){
+  console.log(demand[5]);
+  console.log(decodeURIComponent(demand[5]));
   return Promise.all([getIsOwner(demand_id), isApproved(demand_id)]).then(
     results => {
       return {
@@ -76,10 +78,10 @@ function getShapedDemandObj(demand, demand_id){
         demand_id: demand_id,
         price: demand[3],
         est_date: demand[4],
-        dept_name: demand[5],
+        dept_name: decodeURIComponent(demand[5]),
         dept_latitude: demand[6]/GEODOUBLE,
         dept_longitude: demand[7]/GEODOUBLE,
-        arrv_name: demand[8],
+        arrv_name: decodeURIComponent(demand[8]),
         arrv_latitude: demand[9]/GEODOUBLE,
         arrv_longitude: demand[10]/GEODOUBLE,
       };
@@ -191,14 +193,16 @@ export function mintDemands(
   arrv_longitude
 ){
   const methods = getMethods();
+  console.log(dept_name);
+  console.log(encodeURIComponent(dept_name));
   return methods.mintDemands(
     passengers,
     price,
     est_date,
-    dept_name,
+    encodeURIComponent(dept_name),
     Math.round(dept_latitude*GEODOUBLE),
     Math.round(dept_longitude*GEODOUBLE),
-    arrv_name,
+    encodeURIComponent(arrv_name),
     Math.round(arrv_latitude*GEODOUBLE),
     Math.round(arrv_longitude*GEODOUBLE)
   ).send({from: getSelectedAddress()}).then(
